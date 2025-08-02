@@ -1,0 +1,13 @@
+version: '3'
+
+vars:
+  PROTO_DIR: proto
+  OUT_DIR: gen/ts
+
+tasks:
+
+  gen-user-service:
+    cmds:
+      - powershell -Command "New-Item -ItemType Directory -Force -Path '{{.OUT_DIR}}/{{.SERVICE}}-service'"
+      - powershell -Command "protoc -I={{.PROTO_DIR}}/{{.SERVICE}}-service --ts_out={{.OUT_DIR}}/{{.SERVICE}}-service main.proto"
+    platforms: [windows]

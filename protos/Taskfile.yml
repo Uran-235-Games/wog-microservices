@@ -1,0 +1,25 @@
+version: '3'
+
+vars:
+  PROTO_DIR: proto
+  OUT_GO_DIR: gen/go
+  OUT_TS_DIR: gen/ts
+
+tasks:
+  gen:
+    desc: "Generate Go code from proto file. Usage: task gen -- FILE=auth/auth.proto"
+    vars:
+      FILE: '{{.FILE | default "auth/auth.proto"}}'
+    cmds:
+      - powershell -Command "New-Item -ItemType Directory -Force -Path '{{.OUT_GO_DIR}}'"
+      - powershell -Command "protoc -I {{.PROTO_DIR}} {{.PROTO_DIR}}/{{.FILE}} --go_out={{.OUT_GO_DIR}} --go_opt=paths=source_relative --go-grpc_out={{.OUT_GO_DIR}} --go-grpc_opt=paths=source_relative"
+    platforms: [windows]
+
+  gen-ts:
+    desc: "Generate TypeScript code from proto file. Usage: task gen-ts -- FILE=auth/auth.proto"
+    vars:
+      SERVICE: '{{.s | default "user"}}'
+    cmds:
+      - powershell -Command "New-Item -ItemType Directory -Force -Path '{{.OUT_TS_DIR}}/{{.SERVICE}}-service'"
+      - powershell -Command "protoc -I={{.PROTO_DIR}}/{{.SERVICE}}-service --ts_out={{.OUT_TS_DIR}}/{{.SERVICE}}-service main.proto"
+    platforms: [windows]

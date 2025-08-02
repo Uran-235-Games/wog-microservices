@@ -1,0 +1,1 @@
+# Импорт golang библиотеки доступен по `import "github.com/Uran-235-Games/wog-grpc-lib/"`

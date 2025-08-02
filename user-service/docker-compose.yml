@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "1488:1488"
+    depends_on:
+      - keydb
+
+  keydb:
+    image: eqalpha/keydb
+    ports:
+      - "6379:6379"
+    volumes:
+      - keydb_data:/data
+
+volumes:
+  keydb_data:

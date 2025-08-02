@@ -1,0 +1,19 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  PROTO_DIR: proto
+  PROTO_FILE: user-service
+
+tasks:
+  gen:
+    cmds:
+      - powershell -Command "New-Item -ItemType Directory -Force -Path '{{.PROTO_DIR}}/{{.PROTO_FILE}}'"
+      - powershell -Command "protoc --proto_path=proto --go_out=internal/grpc/gen/{{.PROTO_FILE}} {{.PROTO_FILE}}.proto"
+    platforms: [windows]
+
+  run:
+    cmds:
+      - go run cmd/server.go
+    silent: true
