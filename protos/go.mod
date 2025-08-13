@@ -1,4 +1,5 @@
-module github.com/Uran-235-Games/wog-grpc-lib
+// module github.com/Uran-235-Games/wog-grpc-lib
+module github.com/Uran-235-Games/wog-microservices
 
 go 1.24.2
 
