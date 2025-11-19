@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package match_making;
+
+option go_package = "github.com/Uran-235-Games/wog-microservices/go_battle-service/proto/match_making";
+
+import "types.proto";
+
+service GoMatchMaking {
+  rpc GetRequest(GetRequestRequest) returns (GetRequestResponse);
+  rpc Request(RequestRequest) returns (RequestResponse);
+  rpc CancelRequest(MoveRequest) returns (MoveResponse);
+}
+
+message GetRequestRequest {
+  int32 uid = 1; // id юзера для которого запрашиваются запросы
+}
+
+message GetRequestResponse {
+  repeated types.GameConfig requests = 1; // массив игр
+}
+
+message RequestRequest {
+  int32 from = 1; // id отправителя запроса
+  int32 to = 2; // id получателя запроса
+  int32 id = 3; // id игры
+  types.GameConfig game = 4;
+}
+
+message RequestResponse {
+  int32 id = 1; // id игры
+}
+
+message MoveRequest {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message MoveResponse {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+}

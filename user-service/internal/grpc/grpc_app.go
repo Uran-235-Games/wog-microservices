@@ -6,8 +6,9 @@ import (
 	"log/slog"
 	"net"
 
-	auth_handler "wog-server/internal/grpc/auth"
-	auth_service "wog-server/internal/service/auth"
+	grpc_auth_handler "wog-server/internal/grpc/auth"
+	"wog-server/internal/lib/jwt"
+	"wog-server/internal/service/auth"
 
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/recovery"
@@ -20,9 +21,12 @@ type App struct {
 	log        *slog.Logger
 	gRPCServer *grpc.Server
 	port       string
+
+	auth *auth.AuthService
+	jwt *jwt.JWTSrv
 }
 
-func New(log *slog.Logger, authService *auth_service.AuthService, port string) *App {
+func New(log *slog.Logger, port string, auth *auth.AuthService, jwt *jwt.JWTSrv) *App {
 	loggingOpts := []logging.Option{
 		logging.WithLogOnEvents(
 			logging.PayloadReceived, logging.PayloadSent,
@@ -42,12 +46,14 @@ func New(log *slog.Logger, authService *auth_service.AuthService, port string) *
 		logging.UnaryServerInterceptor(InterceptorLogger(log), loggingOpts...),
 	))
 
-	auth_handler.Register(gRPCServer, authService)
+	grpc_auth_handler.Register(gRPCServer, auth, jwt)
 
 	return &App{
 		log:        log,
 		gRPCServer: gRPCServer,
 		port:       port,
+		auth: auth,
+		jwt: jwt,
 	}
 }
 

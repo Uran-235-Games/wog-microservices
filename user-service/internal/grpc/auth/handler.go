@@ -1,23 +1,33 @@
-package auth
+package grpc_auth
 
 import (
     "context"
 
-    pb_auth "github.com/Uran-235-Games/wog-grpc-lib/gen/go/auth"
-	auth_service "wog-server/internal/service/auth"
+    "wog-server/domain"
+    "wog-server/proto/gen"
+    "wog-server/internal/service/auth"
+    "wog-server/internal/lib/jwt"
 
     "google.golang.org/grpc"
 )
 
 type serverAPI struct {
-    pb_auth.UnimplementedAuthServiceServer
-	authService *auth_service.AuthService
+    user_service.UnimplementedUserServiceServer
+	auth *auth.AuthService
+    jwt *jwt.JWTSrv
 }
 
-func Register(gRPCServer *grpc.Server, auth *auth_service.AuthService) {
-	pb_auth.RegisterAuthServiceServer(gRPCServer, &serverAPI{authService: auth})
+func Register(gRPCServer *grpc.Server, auth *auth.AuthService, jwt *jwt.JWTSrv) {
+	user_service.RegisterUserServiceServer(gRPCServer, &serverAPI{auth: auth, jwt: jwt})
 }
 
-func (s *serverAPI) SignUp(ctx context.Context, in *pb_auth.SignUpRequest) (*pb_auth.SignUpResponse, error) {
-    return &pb_auth.SignUpResponse{Id: "pon", Name: "ivan", Email: "cum@.exe"}, nil
+func (s *serverAPI) SignUp(ctx context.Context, in *user_service.SignUpRequest) (*user_service.SignUpResponse, error) {
+    // TODO: validate input
+    authData := domain.User{Name: in.Name, Email: in.Email, Password: in.Password}
+    uid, err := s.auth.Register(authData)
+    if err != nil {
+        panic(err)
+    }
+
+    return &user_service.SignUpResponse{Id: uid, Name: in.GetName(), Email: in.GetEmail()}, nil
 }

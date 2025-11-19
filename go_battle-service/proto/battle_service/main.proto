@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package battle_service;
+
+option go_package = "github.com/Uran-235-Games/wog-microservices/go_battle-service/proto/battle_service";
+
+import "types.proto";
+
+service BattleService {
+  rpc GetActiveBattles(GetActiveBattlesRequest) returns (GetActiveBattlesResponse);
+}
+
+message GetActiveBattlesRequest {
+  int32 uid = 1; // id игрока
+}
+
+message GetActiveBattlesResponse {
+  // массив игр (укороченная версия настроек, полные настройки можно загрузить отдельно)
+  repeated types.GameConfig battles = 1;
+}

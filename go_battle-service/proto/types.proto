@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package types;
+
+option go_package = "github.com/Uran-235-Games/wog-microservices/go_battle-service/battle/proto";
+
+// Battle types
+message Player {
+  int32 id = 1;
+  string name = 2;
+}
+
+message Players {
+  // массив игроков где 0 - создатель запроса, остальные приглашенный игроки
+  repeated Player players = 1;
+}
+
+message BoardSize {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message Settings {
+  int32 id = 1; // id игры
+  BoardSize size = 2;
+  int32 handicap = 3;
+  float komi = 4;
+}
+
+message GameConfig {
+  int32 id = 1;
+  Players players = 2;
+  Settings settings = 3;
+}
+// ===========================

@@ -29,7 +29,7 @@ func (r *AuthHandler) Register(c *gin.Context) {
 		return
 	}
 
-	user := domain.User(reqUser)
+	user := domain.User{Name: reqUser.Name, Email: reqUser.Email, Password: reqUser.Password}
 
 	userID, err := r.authService.Register(user)
 	if err != nil {
@@ -68,7 +68,7 @@ func (r *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	user := domain.User(reqUser)
+	user := domain.User{Name: reqUser.Name, Email: reqUser.Email, Password: reqUser.Password}
 
 	resUser, err := r.authService.Login(user)
 	if err != nil {

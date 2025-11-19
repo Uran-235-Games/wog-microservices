@@ -55,7 +55,7 @@ func (r *AuthService) Register(user domain.User) (userID string, err error) {
 	return userID, nil
 }
 
-func (r *AuthService) Login(input domain.User) (*domain.SignInResponse, error) {
+func (r *AuthService) Login(input domain.User) (*domain.User, error) {
 	var (
 		user *domain.DBUser
 		err  error
@@ -74,7 +74,7 @@ func (r *AuthService) Login(input domain.User) (*domain.SignInResponse, error) {
 	if user == nil {
 		return nil, errors.New("Юзер не найден")
 	}
-
+	
 	logger.Log.Debug(user.Password)
 	logger.Log.Debug(user.Email)
 
@@ -87,9 +87,9 @@ func (r *AuthService) Login(input domain.User) (*domain.SignInResponse, error) {
 		logger.Log.Error("Ошибка генерации jwt токена", slog.String("err", err.Error()))
 		return nil, errors.New("Ошибка генерации jwt токена")
 	}
-	res := domain.SignInResponse{
+	res := domain.User{
 		Token: token,
-		ID: user.GetStrId(),
+		Id: user.GetStrId(),
 		Name: user.Name,
 		Email: user.Email,
 	}

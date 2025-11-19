@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v6.31.1
-// source: user_service/main.proto
+// source: main.proto
 
 package user_service
 
@@ -30,7 +30,7 @@ type ValidateJWTRequest struct {
 
 func (x *ValidateJWTRequest) Reset() {
 	*x = ValidateJWTRequest{}
-	mi := &file_user_service_main_proto_msgTypes[0]
+	mi := &file_main_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42,7 +42,7 @@ func (x *ValidateJWTRequest) String() string {
 func (*ValidateJWTRequest) ProtoMessage() {}
 
 func (x *ValidateJWTRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_main_proto_msgTypes[0]
+	mi := &file_main_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55,7 +55,7 @@ func (x *ValidateJWTRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateJWTRequest.ProtoReflect.Descriptor instead.
 func (*ValidateJWTRequest) Descriptor() ([]byte, []int) {
-	return file_user_service_main_proto_rawDescGZIP(), []int{0}
+	return file_main_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *ValidateJWTRequest) GetToken() string {
@@ -74,7 +74,7 @@ type ValidateJWTResponse struct {
 
 func (x *ValidateJWTResponse) Reset() {
 	*x = ValidateJWTResponse{}
-	mi := &file_user_service_main_proto_msgTypes[1]
+	mi := &file_main_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -86,7 +86,7 @@ func (x *ValidateJWTResponse) String() string {
 func (*ValidateJWTResponse) ProtoMessage() {}
 
 func (x *ValidateJWTResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_main_proto_msgTypes[1]
+	mi := &file_main_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -99,7 +99,7 @@ func (x *ValidateJWTResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateJWTResponse.ProtoReflect.Descriptor instead.
 func (*ValidateJWTResponse) Descriptor() ([]byte, []int) {
-	return file_user_service_main_proto_rawDescGZIP(), []int{1}
+	return file_main_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *ValidateJWTResponse) GetUserId() string {
@@ -120,7 +120,7 @@ type SignUpRequest struct {
 
 func (x *SignUpRequest) Reset() {
 	*x = SignUpRequest{}
-	mi := &file_user_service_main_proto_msgTypes[2]
+	mi := &file_main_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -132,7 +132,7 @@ func (x *SignUpRequest) String() string {
 func (*SignUpRequest) ProtoMessage() {}
 
 func (x *SignUpRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_main_proto_msgTypes[2]
+	mi := &file_main_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -145,7 +145,7 @@ func (x *SignUpRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SignUpRequest.ProtoReflect.Descriptor instead.
 func (*SignUpRequest) Descriptor() ([]byte, []int) {
-	return file_user_service_main_proto_rawDescGZIP(), []int{2}
+	return file_main_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *SignUpRequest) GetName() string {
@@ -180,7 +180,7 @@ type SignUpResponse struct {
 
 func (x *SignUpResponse) Reset() {
 	*x = SignUpResponse{}
-	mi := &file_user_service_main_proto_msgTypes[3]
+	mi := &file_main_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -192,7 +192,7 @@ func (x *SignUpResponse) String() string {
 func (*SignUpResponse) ProtoMessage() {}
 
 func (x *SignUpResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_main_proto_msgTypes[3]
+	mi := &file_main_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -205,7 +205,7 @@ func (x *SignUpResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SignUpResponse.ProtoReflect.Descriptor instead.
 func (*SignUpResponse) Descriptor() ([]byte, []int) {
-	return file_user_service_main_proto_rawDescGZIP(), []int{3}
+	return file_main_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *SignUpResponse) GetId() string {
@@ -240,7 +240,7 @@ type SignInRequest struct {
 
 func (x *SignInRequest) Reset() {
 	*x = SignInRequest{}
-	mi := &file_user_service_main_proto_msgTypes[4]
+	mi := &file_main_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -252,7 +252,7 @@ func (x *SignInRequest) String() string {
 func (*SignInRequest) ProtoMessage() {}
 
 func (x *SignInRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_main_proto_msgTypes[4]
+	mi := &file_main_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -265,7 +265,7 @@ func (x *SignInRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SignInRequest.ProtoReflect.Descriptor instead.
 func (*SignInRequest) Descriptor() ([]byte, []int) {
-	return file_user_service_main_proto_rawDescGZIP(), []int{4}
+	return file_main_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *SignInRequest) GetName() string {
@@ -301,7 +301,7 @@ type SignInResponse struct {
 
 func (x *SignInResponse) Reset() {
 	*x = SignInResponse{}
-	mi := &file_user_service_main_proto_msgTypes[5]
+	mi := &file_main_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -313,7 +313,7 @@ func (x *SignInResponse) String() string {
 func (*SignInResponse) ProtoMessage() {}
 
 func (x *SignInResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_main_proto_msgTypes[5]
+	mi := &file_main_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -326,7 +326,7 @@ func (x *SignInResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SignInResponse.ProtoReflect.Descriptor instead.
 func (*SignInResponse) Descriptor() ([]byte, []int) {
-	return file_user_service_main_proto_rawDescGZIP(), []int{5}
+	return file_main_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *SignInResponse) GetId() string {
@@ -357,11 +357,12 @@ func (x *SignInResponse) GetEmail() string {
 	return ""
 }
 
-var File_user_service_main_proto protoreflect.FileDescriptor
+var File_main_proto protoreflect.FileDescriptor
 
-const file_user_service_main_proto_rawDesc = "" +
+const file_main_proto_rawDesc = "" +
 	"\n" +
-	"\x17user_service/main.proto\x12\fuser_service\"*\n" +
+	"\n" +
+	"main.proto\x12\fuser_service\"*\n" +
 	"\x12ValidateJWTRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\"-\n" +
 	"\x13ValidateJWTResponse\x12\x16\n" +
@@ -386,22 +387,22 @@ const file_user_service_main_proto_rawDesc = "" +
 	"\vUserService\x12C\n" +
 	"\x06SignUp\x12\x1b.user_service.SignUpRequest\x1a\x1c.user_service.SignUpResponse\x12C\n" +
 	"\x06SignIn\x12\x1b.user_service.SignInRequest\x1a\x1c.user_service.SignInResponse\x12R\n" +
-	"\vValidateJWT\x12 .user_service.ValidateJWTRequest\x1a!.user_service.ValidateJWTResponseBSZQgithub.com/Uran-235-Games/wog-grpc-protocols/proto/user_service/auth;user_serviceb\x06proto3"
+	"\vValidateJWT\x12 .user_service.ValidateJWTRequest\x1a!.user_service.ValidateJWTResponseBGZEgithub.com/Uran-235-Games/wog-microservices/protos/proto/user_serviceb\x06proto3"
 
 var (
-	file_user_service_main_proto_rawDescOnce sync.Once
-	file_user_service_main_proto_rawDescData []byte
+	file_main_proto_rawDescOnce sync.Once
+	file_main_proto_rawDescData []byte
 )
 
-func file_user_service_main_proto_rawDescGZIP() []byte {
-	file_user_service_main_proto_rawDescOnce.Do(func() {
-		file_user_service_main_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_user_service_main_proto_rawDesc), len(file_user_service_main_proto_rawDesc)))
+func file_main_proto_rawDescGZIP() []byte {
+	file_main_proto_rawDescOnce.Do(func() {
+		file_main_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_main_proto_rawDesc), len(file_main_proto_rawDesc)))
 	})
-	return file_user_service_main_proto_rawDescData
+	return file_main_proto_rawDescData
 }
 
-var file_user_service_main_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_user_service_main_proto_goTypes = []any{
+var file_main_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_main_proto_goTypes = []any{
 	(*ValidateJWTRequest)(nil),  // 0: user_service.ValidateJWTRequest
 	(*ValidateJWTResponse)(nil), // 1: user_service.ValidateJWTResponse
 	(*SignUpRequest)(nil),       // 2: user_service.SignUpRequest
@@ -409,7 +410,7 @@ var file_user_service_main_proto_goTypes = []any{
 	(*SignInRequest)(nil),       // 4: user_service.SignInRequest
 	(*SignInResponse)(nil),      // 5: user_service.SignInResponse
 }
-var file_user_service_main_proto_depIdxs = []int32{
+var file_main_proto_depIdxs = []int32{
 	2, // 0: user_service.UserService.SignUp:input_type -> user_service.SignUpRequest
 	4, // 1: user_service.UserService.SignIn:input_type -> user_service.SignInRequest
 	0, // 2: user_service.UserService.ValidateJWT:input_type -> user_service.ValidateJWTRequest
@@ -423,26 +424,26 @@ var file_user_service_main_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_user_service_main_proto_init() }
-func file_user_service_main_proto_init() {
-	if File_user_service_main_proto != nil {
+func init() { file_main_proto_init() }
+func file_main_proto_init() {
+	if File_main_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_service_main_proto_rawDesc), len(file_user_service_main_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_main_proto_rawDesc), len(file_main_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_user_service_main_proto_goTypes,
-		DependencyIndexes: file_user_service_main_proto_depIdxs,
-		MessageInfos:      file_user_service_main_proto_msgTypes,
+		GoTypes:           file_main_proto_goTypes,
+		DependencyIndexes: file_main_proto_depIdxs,
+		MessageInfos:      file_main_proto_msgTypes,
 	}.Build()
-	File_user_service_main_proto = out.File
-	file_user_service_main_proto_goTypes = nil
-	file_user_service_main_proto_depIdxs = nil
+	File_main_proto = out.File
+	file_main_proto_goTypes = nil
+	file_main_proto_depIdxs = nil
 }

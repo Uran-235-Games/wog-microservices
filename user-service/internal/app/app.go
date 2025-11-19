@@ -29,7 +29,7 @@ func getEnv(key, def string) string {
 
 func (con *Config) Init() *Config {
 	return &Config{
-		SrvPort:      getEnv("PORT", "1488"),
+		SrvPort:      getEnv("HTTP_PORT", "1488"),
 		GRPCSrvPort:  getEnv("GRPCPORT", "1489"),
 		SocketIOPort: getEnv("SOCKETIOPORT", "1487"),
 		LogMode:      getEnv("MODE", "DEV"),

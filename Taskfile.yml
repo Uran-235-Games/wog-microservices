@@ -1,0 +1,86 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  # USER_SERVICE
+  USER_SERVICE: user-service
+  USER_SERVICE_PROTO_DIR: "{{.USER_SERVICE}}/proto"
+  GO_BATTLE_SERVICE_PROTO_DIR: "go_battle-service/proto"
+
+  # SOCKETIO-GATEWAY
+  SOCKETIO_GATEWAY: socketio-gateway
+
+  # NGINX
+  NGINX_FOLDER_PATH: "C:/nginx-1.28.0"
+
+tasks:
+  # USER_SERVICE
+  gen-user-service:
+    desc: "Генерирует golang файлы для user-service"
+    vars:
+      OUT_DIR: user-service/proto/gen
+      FILE: main.proto
+    cmds:
+      - powershell -Command "New-Item -ItemType Directory -Force -Path '{{.OUT_DIR}}'"
+      - powershell -Command "protoc -I {{.USER_SERVICE_PROTO_DIR}} {{.USER_SERVICE_PROTO_DIR}}/{{.FILE}} --go_out={{.OUT_DIR}} --go_opt=paths=source_relative --go-grpc_out={{.OUT_DIR}} --go-grpc_opt=paths=source_relative"
+    platforms: [windows]
+
+  # Генерирует ts файлы по USER_SERVICE .proto
+  gen-user-service-ts:
+    vars:
+      OUT_DIR: "{{.SOCKETIO_GATEWAY}}/src/grpc/user-service"
+    cmds:
+      - powershell -Command "New-Item -ItemType Directory -Force -Path '{{.OUT_DIR}}'"
+      - powershell -Command "protoc --ts_proto_opt=outputServices=grpc-js --plugin=protoc-gen-ts_proto={{.SOCKETIO_GATEWAY}}\node_modules\.bin\protoc-gen-ts_proto.cmd --ts_proto_out={{.OUT_DIR}} --proto_path={{.USER_SERVICE_PROTO_DIR}} main.proto"
+    platforms: [windows]
+
+  gen-go_battle-service-client:
+    desc: "Генерирует golang файлы сервера для go_battle-service"
+    vars:
+      OUT_DIR: go_battle-service/proto/gen
+      FILE: main.proto
+    cmds:
+      - powershell -Command "New-Item -ItemType Directory -Force -Path '{{.OUT_DIR}}'"
+      - powershell -Command "protoc -I {{.GO_BATTLE_SERVICE_PROTO_DIR}} {{.GO_BATTLE_SERVICE_PROTO_DIR}}/battle_service/main.proto {{.GO_BATTLE_SERVICE_PROTO_DIR}}/match_making/main.proto --go_out={{.OUT_DIR}} --go_opt=paths=source_relative --go-grpc_out={{.OUT_DIR}} --go-grpc_opt=paths=source_relative"
+    platforms: [windows]
+
+  # Генерирует ts файлы по MATCH_MAKING .proto для SOCKETIO_HANDLER
+  gen-match_making-for-socketio_gateway:
+    vars:
+      OUT_DIR: "{{.SOCKETIO_GATEWAY}}/src/grpc"
+    cmds:
+      - powershell -Command "New-Item -ItemType Directory -Force -Path '{{.OUT_DIR}}'"
+      - powershell -Command "protoc -I {{.GO_BATTLE_SERVICE_PROTO_DIR}} --ts_proto_opt=outputServices=grpc-js --plugin=protoc-gen-ts_proto={{.SOCKETIO_GATEWAY}}\node_modules\.bin\protoc-gen-ts_proto.cmd --ts_proto_out={{.OUT_DIR}} {{.GO_BATTLE_SERVICE_PROTO_DIR}}/match_making/main.proto {{.GO_BATTLE_SERVICE_PROTO_DIR}}/battle_service/main.proto"
+    platforms: [windows]
+
+  # Запуск nginx
+  nginx-start:
+    dir: "{{.NGINX_FOLDER_PATH}}"
+    cmds:
+      - powershell -Command ".\nginx.exe"
+
+  # Закрытие всех процессов nginx
+  nginx-stop:
+    aliases: ["ns"]
+    cmds:
+      - powershell -Command "taskkill /IM nginx.exe /F"
+
+  # Обновление конфига (копирование nginx.conf из проэкта в корень nginx на пк)
+  nginx-reload:
+    aliases: ["nr"]
+    vars:
+      PROJECT_NGINX_CONF_PATH: "D:/sklad/txt/World-Of-Go/wog-microservices/nginx/nginx.conf"
+    dir: "{{.NGINX_FOLDER_PATH}}"
+    cmds:
+      - powershell -Command "Copy-Item {{.PROJECT_NGINX_CONF_PATH}} {{.NGINX_FOLDER_PATH}}/conf"
+      - powershell -Command ".\nginx -t"
+      # - powershell -Command ".\nginx -s reload" # в windows не работает
+      - powershell -Command ".\nginx.exe"
+
+  # Вызывает nginx из нужной директории с передачей аргументов
+  # Пример: task nginx -- args
+  nginx:
+    dir: "{{.NGINX_FOLDER_PATH}}"
+    cmds:
+      - powershell -Command ".\nginx {{.CLI_ARGS}}"

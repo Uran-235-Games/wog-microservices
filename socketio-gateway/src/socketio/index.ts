@@ -1,30 +1,81 @@
 import { Server } from "socket.io";
 import { ClientEvents } from "@socketio/socketEvents";
 import { SocketErrors, SocketData, ServerBattleRequest, ClientBattleRequest, BattleObj } from "@socketio/types";
+import { match_making_service, user_service } from "@grpc/client"
+import { ValidateJWTRequest, ValidateJWTResponse } from "@root/grpc/user-service/main";
+import { ServiceError } from "@grpc/grpc-js";
+import { GetRequestResponse, GetRequestRequest, GameConfig } from "@grpc/match_making-service/main";
 
-export function setupSocketIO(io: Server, deps: {
-  jwtLib: any,
-  userRepo: any,
-  gameRepo: any,
-  battleSrvc: any,
-}) {
+function validateJwtAsync(token: string): Promise<ValidateJWTResponse> {
+  return new Promise((resolve, reject) => {
+    user_service.validateJwt({ token }, (err: ServiceError | null, res: ValidateJWTResponse) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
+
+function GetBattleRequestsAsync(uid: number): Promise<GetRequestResponse> {
+  return new Promise((resolve, reject) => {
+    match_making_service.getRequest({ uid }, (err: ServiceError | null, res: GetRequestResponse) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
+
+export function setupSocketIO(io: Server) {
   const emit = new ClientEvents(io);
   const errors = SocketErrors;
 
-  io.on("connection", (socket) => {
+  io.on("connection", async (socket) => {
     const rawQuery = socket.handshake.query;
     const token = rawQuery.auth as string;
 
-    const uid = deps.jwtLib.validate(token);
-    if (!uid) {
-      emit.Error(errors.JWT_Invalid(), socket);
+    let uid: string;
+    try {
+      uid = (await validateJwtAsync(token)).userId
+    } catch (err) {
       socket.disconnect();
+      emit.Error(errors.JWT_Invalid(), socket);
       return;
     }
 
     const data: SocketData = { uid, game: { id: "", color: "", opponentID: "" } };
     socket.data = data;
     socket.join(uid);
+
+    // Проверка запросов на игру через match_making_service
+    await (async function CheckBattleRequests() {
+      let list: GetRequestResponse | null = null;
+      try {
+        list = await GetBattleRequestsAsync(Number(uid));
+      } catch (err) {
+        return console.error("Ошибка получения игр юзера: ", uid);
+      }
+
+      if (list && !list.requests) return console.log("Юзер uid: ", uid, " не имеет активных игр");
+
+      for (let battle of list.requests) {
+        // TODO
+        emit.BattleRequest();
+      }
+    })();
+
+    // Проверка активных игр через battle_service
+    await (async function CheckActiveGames() {
+      const games = await GetBattleRequestsAsync(Number(uid));
+      if (!games) return console.log("юзер (uid: ", uid, ") не имеет активных игр");
+      for (const game of games) {
+        console.log(game);
+      }
+    })();
 
     // redis check
     (async () => {

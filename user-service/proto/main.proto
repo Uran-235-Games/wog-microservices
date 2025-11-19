@@ -1,12 +1,22 @@
 syntax = "proto3";
 
-package auth;
+package user_service;
 
-option go_package = "github.com/Uran-235-Games/wog-grpc-protocols/proto/auth/auth;auth";
+// option go_package = "github.com/Uran-235-Games/wog-grpc-protocols/proto/user_service/auth;user_service";
+option go_package = "github.com/Uran-235-Games/wog-microservices/user-service/proto";
 
-service AuthService {
+service UserService {
   rpc SignUp(SignUpRequest) returns (SignUpResponse);
   rpc SignIn(SignInRequest) returns (SignInResponse);
+  rpc ValidateJWT(ValidateJWTRequest) returns (ValidateJWTResponse);
+}
+
+message ValidateJWTRequest {
+  string token = 1;
+}
+
+message ValidateJWTResponse {
+  string userId = 1;
 }
 
 message SignUpRequest {
@@ -28,8 +38,8 @@ message SignInRequest {
 }
 
 message SignInResponse {
-  string token = 1;
-  string id = 2;
+  string id = 1;
+  string token = 2;
   string name = 3;
   string email = 4;
 }
